@@ -103,6 +103,37 @@ body{font-family:'Manrope',sans-serif;background:var(--deep);color:white;min-hei
 .urgency-banner svg{flex-shrink:0;color:var(--sunset)}
 .urgency-banner .text{font-size:13px;color:rgba(255,255,255,.85)}
 .urgency-banner .text strong{color:white;display:block;margin-bottom:2px}
+/* ---- Home / landing screen ---- */
+.home-screen{display:none;padding:36px 24px 40px;animation:slideIn .5s cubic-bezier(.22,1,.36,1)}
+.home-screen.active{display:block}
+.home-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(125,211,252,.85);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.home-eyebrow::before{content:'';width:26px;height:1px;background:rgba(125,211,252,.5)}
+.home-title{font-family:'Fraunces',serif;font-size:46px;font-weight:400;line-height:1.02;letter-spacing:-.03em;margin-bottom:18px}
+.home-title .italic{font-style:italic;color:var(--ice)}
+.home-sub{color:rgba(255,255,255,.55);font-size:15px;line-height:1.6;margin-bottom:28px;max-width:400px}
+.home-cta-row{display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+.home-cta{width:100%;padding:18px;border-radius:999px;background:linear-gradient(135deg,var(--coral),var(--rose));box-shadow:0 0 60px rgba(251,146,60,.3);color:white;border:none;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .2s}
+.home-cta:hover{transform:scale(1.02)}
+.home-cta-call{width:100%;padding:17px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:white;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:all .2s}
+.home-cta-call:hover{background:rgba(255,255,255,.08)}
+.home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:40px}
+.home-stat{padding:16px 8px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);text-align:center}
+.home-stat .num{font-family:'Fraunces',serif;font-size:24px;font-weight:500;color:var(--ice);margin-bottom:4px;line-height:1}
+.home-stat .lbl{font-size:10px;color:rgba(255,255,255,.45);line-height:1.35}
+.home-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:16px}
+.home-services{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:40px}
+.home-service{padding:18px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:all .25s cubic-bezier(.22,1,.36,1)}
+.home-service:hover{background:rgba(255,255,255,.05);transform:translateY(-3px);border-color:rgba(125,211,252,.25)}
+.home-service .emoji{font-size:26px;margin-bottom:12px;line-height:1}
+.home-service .name{font-weight:600;font-size:14px;margin-bottom:3px}
+.home-service .desc{font-size:11px;color:rgba(255,255,255,.4);line-height:1.4}
+.home-why{margin-bottom:40px}
+.home-why-item{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:14px;color:rgba(255,255,255,.82);line-height:1.4}
+.home-why-item:last-child{border-bottom:none}
+.home-why-item .check{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(16,185,129,.15);display:flex;align-items:center;justify-content:center;color:var(--emerald)}
+.home-final{padding:30px 26px;border-radius:24px;background:linear-gradient(135deg,rgba(125,211,252,.09),rgba(251,146,60,.06));border:1px solid rgba(255,255,255,.08);text-align:center}
+.home-final h3{font-family:'Fraunces',serif;font-size:27px;font-weight:400;margin-bottom:8px;line-height:1.15}
+.home-final p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:22px;line-height:1.55}
 @media (max-width:480px){.app-shell{max-width:100%}}
 </style>
 </head>
@@ -114,9 +145,9 @@ body{font-family:'Manrope',sans-serif;background:var(--deep);color:white;min-hei
 <div class="app-shell">
 
 <div class="app-header">
-<button class="back-btn" onclick="restartFlow()">
+<button class="back-btn" id="headerBackBtn" onclick="goHome()">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-<span data-i18n="back">Back</span>
+<span data-i18n="home.back">Home</span>
 </button>
 <div class="app-header-logo">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="5" y1="5" x2="19" y2="19"/><line x1="5" y1="19" x2="19" y2="5"/></svg>
@@ -126,6 +157,70 @@ body{font-family:'Manrope',sans-serif;background:var(--deep);color:white;min-hei
 <div class="lang-slider" id="langSlider"></div>
 <button class="lang-btn active" data-lang="en">EN</button>
 <button class="lang-btn" data-lang="es">ES</button>
+</div>
+</div>
+
+<!-- HOME / LANDING -->
+<div class="home-screen active" id="homeScreen">
+<div class="home-eyebrow" data-i18n="home.eyebrow">Miami-Dade · Licensed &amp; insured</div>
+<h1 class="home-title" data-i18n-html="home.title">Cool comfort,<br><span class="italic">on demand.</span></h1>
+<p class="home-sub" data-i18n="home.sub">Fast, honest AC repair, installation &amp; maintenance across Miami-Dade. Licensed techs, upfront pricing, and same-day service when the heat won't wait.</p>
+<div class="home-cta-row">
+<button class="home-cta" onclick="startBooking()">
+<span data-i18n="home.cta">Book service</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+</button>
+<a href="tel:+13055550142" class="home-cta-call">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+<span data-i18n="home.call">Call (305) 555-0142</span>
+</a>
+</div>
+
+<div class="home-stats">
+<div class="home-stat"><div class="num" data-i18n="home.stat1">24/7</div><div class="lbl" data-i18n="home.stat1.l">Emergency service</div></div>
+<div class="home-stat"><div class="num" data-i18n="home.stat2">90 min</div><div class="lbl" data-i18n="home.stat2.l">Avg. response</div></div>
+<div class="home-stat"><div class="num" data-i18n="home.stat3">4.9★</div><div class="lbl" data-i18n="home.stat3.l">1,200+ reviews</div></div>
+</div>
+
+<div class="home-section-label" data-i18n="home.services">What we do</div>
+<div class="home-services">
+<div class="home-service" onclick="startBooking('repair')">
+<div class="emoji">🔧</div>
+<div class="name" data-i18n="s1.repair">AC Repair</div>
+<div class="desc" data-i18n="home.svc.repair">Not cooling, leaks, odd noises</div>
+</div>
+<div class="home-service" onclick="startBooking('install')">
+<div class="emoji">⚡</div>
+<div class="name" data-i18n="s1.install">New Installation</div>
+<div class="desc" data-i18n="home.svc.install">Replacements &amp; new systems</div>
+</div>
+<div class="home-service" onclick="startBooking('maintenance')">
+<div class="emoji">🧰</div>
+<div class="name" data-i18n="s1.maintenance">Maintenance / Tune-Up</div>
+<div class="desc" data-i18n="home.svc.maintenance">Keep it running efficiently</div>
+</div>
+<div class="home-service" onclick="startBooking('commercial')">
+<div class="emoji">🏢</div>
+<div class="name" data-i18n="s1.commercial">Commercial / Refrigeration</div>
+<div class="desc" data-i18n="home.svc.commercial">Restaurants &amp; businesses</div>
+</div>
+</div>
+
+<div class="home-section-label" data-i18n="home.whyLabel">Why Icebox</div>
+<div class="home-why">
+<div class="home-why-item"><span class="check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="home.why1">Licensed &amp; fully insured technicians</span></div>
+<div class="home-why-item"><span class="check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="home.why2">Upfront, honest pricing — no surprises</span></div>
+<div class="home-why-item"><span class="check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="home.why3">Bilingual dispatch — English &amp; Spanish</span></div>
+<div class="home-why-item"><span class="check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="home.why4">Same-day &amp; 24/7 emergency availability</span></div>
+</div>
+
+<div class="home-final">
+<h3 data-i18n="home.final.title">Ready when you are.</h3>
+<p data-i18n="home.final.sub">Book in under a minute. A dispatcher texts to confirm within 15 minutes.</p>
+<button class="home-cta" onclick="startBooking()">
+<span data-i18n="home.cta">Book service</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+</button>
 </div>
 </div>
 
@@ -140,7 +235,7 @@ body{font-family:'Manrope',sans-serif;background:var(--deep);color:white;min-hei
 <div class="steps-container">
 
 <!-- STEP 1: Service Type -->
-<div class="step active" data-step="1">
+<div class="step" data-step="1">
 <div class="step-icon">
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
 </div>
@@ -334,7 +429,26 @@ body{font-family:'Manrope',sans-serif;background:var(--deep);color:white;min-hei
 <script>
 const translations = {
   en: {
-    'back':'Back','next':'Continue',
+    'back':'Back','next':'Continue','home.back':'Home',
+    'home.eyebrow':'Miami-Dade · Licensed & insured',
+    'home.title':'Cool comfort,<br><span class="italic">on demand.</span>',
+    'home.sub':'Fast, honest AC repair, installation & maintenance across Miami-Dade. Licensed techs, upfront pricing, and same-day service when the heat won\'t wait.',
+    'home.cta':'Book service','home.call':'Call (305) 555-0142',
+    'home.stat1':'24/7','home.stat1.l':'Emergency service',
+    'home.stat2':'90 min','home.stat2.l':'Avg. response',
+    'home.stat3':'4.9★','home.stat3.l':'1,200+ reviews',
+    'home.services':'What we do',
+    'home.svc.repair':'Not cooling, leaks, odd noises',
+    'home.svc.install':'Replacements & new systems',
+    'home.svc.maintenance':'Keep it running efficiently',
+    'home.svc.commercial':'Restaurants & businesses',
+    'home.whyLabel':'Why Icebox',
+    'home.why1':'Licensed & fully insured technicians',
+    'home.why2':'Upfront, honest pricing — no surprises',
+    'home.why3':'Bilingual dispatch — English & Spanish',
+    'home.why4':'Same-day & 24/7 emergency availability',
+    'home.final.title':'Ready when you are.',
+    'home.final.sub':'Book in under a minute. A dispatcher texts to confirm within 15 minutes.',
     'step.1':'Service Type','step.2':'Urgency','step.3':'Property',
     'step.4':'Schedule','step.5':'Contact','step.6':'Address','step.7':'Review',
     's1.title':'What do you<br><span class="italic">need fixed?</span>',
@@ -382,7 +496,26 @@ const translations = {
     'day.Mon':'MON','day.Tue':'TUE','day.Wed':'WED','day.Thu':'THU','day.Fri':'FRI','day.Sat':'SAT','day.Sun':'SUN'
   },
   es: {
-    'back':'Atrás','next':'Continuar',
+    'back':'Atrás','next':'Continuar','home.back':'Inicio',
+    'home.eyebrow':'Miami-Dade · Licenciados y asegurados',
+    'home.title':'Confort fresco,<br><span class="italic">cuando lo necesites.</span>',
+    'home.sub':'Reparación, instalación y mantenimiento de AC rápido y honesto en todo Miami-Dade. Técnicos licenciados, precios claros y servicio el mismo día cuando el calor no espera.',
+    'home.cta':'Reservar servicio','home.call':'Llamar (305) 555-0142',
+    'home.stat1':'24/7','home.stat1.l':'Servicio de emergencia',
+    'home.stat2':'90 min','home.stat2.l':'Respuesta promedio',
+    'home.stat3':'4.9★','home.stat3.l':'1,200+ reseñas',
+    'home.services':'Qué hacemos',
+    'home.svc.repair':'No enfría, gotea, ruidos',
+    'home.svc.install':'Reemplazos y sistemas nuevos',
+    'home.svc.maintenance':'Mantén todo eficiente',
+    'home.svc.commercial':'Restaurantes y negocios',
+    'home.whyLabel':'Por qué Icebox',
+    'home.why1':'Técnicos licenciados y asegurados',
+    'home.why2':'Precios claros y honestos — sin sorpresas',
+    'home.why3':'Despacho bilingüe — inglés y español',
+    'home.why4':'Disponibilidad el mismo día y 24/7',
+    'home.final.title':'Listos cuando tú lo estés.',
+    'home.final.sub':'Reserva en menos de un minuto. Un despachador confirma por mensaje en 15 minutos.',
     'step.1':'Tipo de Servicio','step.2':'Urgencia','step.3':'Propiedad',
     'step.4':'Horario','step.5':'Contacto','step.6':'Dirección','step.7':'Revisar',
     's1.title':'¿Qué necesitas<br><span class="italic">arreglar?</span>',
@@ -434,6 +567,7 @@ const translations = {
 const stepLabels = ['step.1','step.2','step.3','step.4','step.5','step.6','step.7'];
 let currentLang = localStorage.getItem('ias_lang') || 'en';
 let currentStep = 1;
+let onHome = true;
 const TOTAL_STEPS = 7;
 
 let booking = {
@@ -450,6 +584,10 @@ function applyLanguage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (translations[lang][key]) el.innerHTML = translations[lang][key];
   });
   document.querySelectorAll('.step h2').forEach(el => {
     const matches = el.outerHTML.match(/data-i18n="([^"]+)"/);
@@ -507,17 +645,52 @@ function prevStep() {
   if (currentStep > 1) { currentStep--; updateUI(); }
 }
 
-function restartFlow() {
+function resetBooking() {
   booking = { service: null, urgency: null, property: null, date: null, time: null,
     name: '', phone: '', email: '', address: '', city: '', zip: '', notes: '' };
   document.querySelectorAll('.option.selected, .date-pill.selected, .time-slot.selected').forEach(el => el.classList.remove('selected'));
   document.querySelectorAll('.form-input').forEach(el => el.value = '');
+}
+
+function showHome() {
+  onHome = true;
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('successScreen').classList.remove('active');
+  document.getElementById('homeScreen').classList.add('active');
+  document.getElementById('progressSection').style.display = 'none';
+  document.getElementById('appFooter').style.display = 'none';
+  document.getElementById('headerBackBtn').style.display = 'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function goHome() {
+  resetBooking();
+  showHome();
+}
+
+function startBooking(preselect) {
+  onHome = false;
+  document.getElementById('homeScreen').classList.remove('active');
   document.getElementById('successScreen').classList.remove('active');
   document.getElementById('progressSection').style.display = '';
   document.getElementById('appFooter').style.display = '';
+  document.getElementById('headerBackBtn').style.display = 'flex';
   currentStep = 1;
   updateUI();
+  if (preselect) {
+    const opt = document.querySelector(`.step[data-step="1"] .option[data-value="${preselect}"]`);
+    if (opt) {
+      document.querySelectorAll('.step[data-step="1"] .option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      booking.service = preselect;
+      validate();
+    }
+  }
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function restartFlow() {
+  goHome();
 }
 
 document.querySelectorAll('.step[data-step="1"] .option').forEach(opt => {
@@ -631,6 +804,7 @@ for (let i = 0; i < 10; i++) {
 
 applyLanguage(currentLang);
 updateUI();
+showHome();
 </script>
 </body>
 </html>
